@@ -1,24 +1,26 @@
 ---
-Language:        Cpp
 BasedOnStyle:  Google
 NamespaceIndentation: Inner
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: true
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: true
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: true
 BreakBeforeBraces: Allman
 BreakConstructorInitializers: BeforeColon
-ColumnLimit:     88
+ColumnLimit:     80
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 4
-IndentWidth:     4
+ConstructorInitializerIndentWidth: 2
+ContinuationIndentWidth: 2
+IndentWidth:     2
 IndentWrappedFunctionNames: false
 PointerAlignment: Left
 ReflowComments:  true
 SortIncludes:    false
 Standard:        Auto
-TabWidth:        4
+TabWidth:        2
 UseTab:          Never
+AlignConsecutiveMacros: true
 ...
 
