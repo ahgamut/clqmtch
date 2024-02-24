@@ -2,6 +2,7 @@ package org.ahgamut.clqmtch;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MMReader {
 
@@ -41,7 +42,7 @@ public class MMReader {
     }
     System.out.println("vertices: " + num_vertices);
     System.out.println("edges: " + num_edges);
-    el.sort();
+    Collections.sort(el);
     return el;
   }
 
