@@ -22,12 +22,52 @@ public class Graph {
     this.vertices = new ArrayList<>();
   }
 
+  public void load_matrix(int num_vertices, char[][] adjmat) {
+    this.n_vert = num_vertices;
+    this.n_edges = 0;
+    this.vertices.ensureCapacity(this.n_vert);
+
+    int i;
+    int j;
+    int count;
+
+    for (i = 0; i < this.n_vert; ++i) {
+      adjmat[i][i] = 1;
+    }
+
+    for (i = 0; i < this.n_vert; ++i) {
+      for (j = i + 1; j < this.n_vert; ++i) {
+        if(adjmat[i][j] != 0 || adjmat[j][i] != 0) {
+          adjmat[i][j] = 1;
+          adjmat[j][i] = 1;
+        }
+      }
+    }
+
+    for (i = 0; i < this.n_vert; ++i) {
+      Vertex vert = new Vertex();
+      for (count = 0, j = 0; j < this.n_vert; ++j) {
+        if (adjmat[i][j] != 0) {
+          vert.neibs.add(j);
+          if (j == i) vert.spos = count;
+          count += 1;
+        }
+      }
+      vert.N = count;
+      n_edges += count;
+      vert.bits = new BitSet(vert.N);
+      this.vertices.add(vert);
+      if (count > this.max_degree) this.max_degree = count;
+    }
+    this.set_bounds();
+  }
+
   public void load_edges(int num_vertices, int num_edges, ArrayList<EdgeValue> edges) {
     this.n_vert = num_vertices + 1;
     this.n_edges = num_edges;
     this.vertices.ensureCapacity(this.n_vert);
 
-    int i = 0;
+    int i;
     int j = 0;
     int count;
     int esize = edges.size();
