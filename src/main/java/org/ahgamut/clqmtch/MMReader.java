@@ -5,19 +5,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MMReader {
+  int num_vertices;
+  int num_edges;
+  ArrayList<EdgeValue> edges;
 
-  private ArrayList<EdgeValue> readBufferedReader(BufferedReader reader) throws IOException {
-    ArrayList<EdgeValue> el = new ArrayList<>();
-    int num_vertices, num_edges;
+  MMReader() {
+    num_edges = 0;
+    num_vertices = 0;
+    edges = new ArrayList<>();
+  }
+
+  private void readBufferedReader(BufferedReader reader) throws IOException {
     int first, second;
 
     String line;
-    String values[];
+    String[] values;
     // skip comments
     while ((line = reader.readLine()) != null) {
       if (line.charAt(0) == '%' || line.charAt(0) == '#') {
         continue;
       }
+      break;
     }
     // read header
     values = line.split(" ");
@@ -27,7 +35,7 @@ public class MMReader {
     num_vertices = Integer.parseInt(values[0], 10);
     num_edges = Integer.parseInt(values[2], 10);
     for (int i = 0; i <= num_vertices; i++) {
-      el.add(new EdgeValue(i, i));
+      edges.add(new EdgeValue(i, i));
     }
 
     while ((line = reader.readLine()) != null) {
@@ -37,22 +45,29 @@ public class MMReader {
       values = line.split(" ");
       first = Integer.parseInt(values[0]);
       second = Integer.parseInt(values[1]);
-      el.add(new EdgeValue(first, second));
-      el.add(new EdgeValue(second, first));
+      edges.add(new EdgeValue(first, second));
+      edges.add(new EdgeValue(second, first));
     }
     System.out.println("vertices: " + num_vertices);
     System.out.println("edges: " + num_edges);
-    Collections.sort(el);
-    return el;
+    Collections.sort(edges);
   }
 
-  ArrayList<EdgeValue> readFile(String fileName) throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
-    return readBufferedReader(reader);
+  void readFile(String fileName) {
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
+      readBufferedReader(reader);
+    } catch (IOException e) {
+      System.out.printf("Unable to read file: %s\n", e);
+    }
   }
 
-  ArrayList<EdgeValue> readString(String data) throws IOException {
-    BufferedReader reader = new BufferedReader(new StringReader(data));
-    return readBufferedReader(reader);
+  void readString(String data) {
+    try {
+      BufferedReader reader = new BufferedReader(new StringReader(data));
+      readBufferedReader(reader);
+    } catch (IOException e) {
+      System.out.printf("Unable to read string: %s\n", e);
+    }
   }
 }

@@ -20,6 +20,10 @@ public class SearchState {
     this.id = other.id;
     this.res = (BitSet) other.res.clone();
     this.cand = (BitSet) other.cand.clone();
-    this.start_at = this.cand.nextSetBit(0);
+    this.start_at = 0;
+  }
+
+  public String toString() {
+    return res.toString() + " " + cand.toString();
   }
 }

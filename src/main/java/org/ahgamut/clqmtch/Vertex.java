@@ -10,26 +10,34 @@ public class Vertex {
   ArrayList<Integer> neibs;
   BitSet bits;
 
+  Vertex() {
+    this.N = 0;
+    this.spos = 0;
+    this.mcs = 0;
+    this.neibs = new ArrayList<>();
+    this.bits = null;
+  }
+
   Vertex(int N) {
     this.N = N;
     this.spos = 0;
-    this.mcs = 1;
+    this.mcs = 0;
     this.neibs = new ArrayList<>(N);
     this.bits = new BitSet(N);
   }
 
   Vertex(ArrayList<Integer> neibs) {
-    this.neibs = neibs;
+    this.neibs = (ArrayList<Integer>) neibs.clone();
     this.N = neibs.size();
     this.spos = 0;
-    this.mcs = 1;
+    this.mcs = 0;
     this.bits = new BitSet(this.N);
   }
 
   public void disp() {
-    if (this.N <= 1 || this.mcs <= 1) return;
-    System.out.print(this.neibs.toString());
-    System.out.printf("current clique: %s%n", this.bits.toString());
+    System.out.printf(
+        "%d %s :: current clique: %s%n",
+        this.neibs.get(this.spos), this.neibs, this.give_clique().toString());
   }
 
   public void clique_disp() {
