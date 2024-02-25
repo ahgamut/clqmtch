@@ -50,13 +50,11 @@ public class Graph {
     int cur;
     int j;
     int vert;
-    int mcs;
     BitSet sg = new BitSet(this.n_vert + 1);
     for (cur = 0; cur < this.n_vert; cur++) {
       Vertex vcur = vertices.get(cur);
       sg.clear();
       sg.set(0);
-      mcs = 0;
       // greedy vertex coloring: vertex cur is assigned
       // a color one more than the largest color among
       // the vertices to which it is connected
@@ -65,14 +63,10 @@ public class Graph {
         vert = vcur.neibs.get(j);
         sg.set(this.vertices.get(vert).mcs);
       }
-      for (j = 0; sg.get(j) && j < vcur.N + 1; ++j) {
-        //
-      }
-      mcs = j;
-      vcur.mcs = mcs;
-      if (mcs > this.CLIQUE_LIMIT) {
+      vcur.mcs = sg.nextClearBit(0);
+      if (vcur.mcs > this.CLIQUE_LIMIT) {
         this.CUR_MAX_CLIQUE_LOCATION = cur;
-        this.CLIQUE_LIMIT = mcs;
+        this.CLIQUE_LIMIT = vcur.mcs;
       }
     }
   }
