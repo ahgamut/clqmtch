@@ -5,41 +5,35 @@ import java.util.BitSet;
 import java.util.Stack;
 
 public class StackDFS {
-  private final Stack<SearchState> states;
-  private final ArrayList<Integer> to_remove;
-  int candidates_left;
-  int clique_size;
-  int clique_potential;
-  int i;
-  int j;
-  int k;
-  int vert;
-
-  StackDFS() {
-    this.states = new Stack<>();
-    this.to_remove = new ArrayList<>();
-  }
 
   public void process_graph(Graph G) {
-    this.states.ensureCapacity(G.CLIQUE_LIMIT);
-    this.to_remove.ensureCapacity(G.CLIQUE_LIMIT);
-    this.process_vertex(G, G.CUR_MAX_CLIQUE_LOCATION);
-    for (i = G.n_vert - 1; i >= 0; i--) {
+    Stack<SearchState> states = new Stack<>();
+    ArrayList<Integer> to_remove = new ArrayList<>();
+    states.ensureCapacity(G.CLIQUE_LIMIT);
+    to_remove.ensureCapacity(G.CLIQUE_LIMIT);
+    this.process_vertex(G, G.CUR_MAX_CLIQUE_LOCATION, states, to_remove);
+    for (int i = G.n_vert - 1; i >= 0; i--) {
       if (G.vertices.get(i).mcs <= G.CUR_MAX_CLIQUE_SIZE
           || G.CUR_MAX_CLIQUE_SIZE >= G.CLIQUE_LIMIT) {
         continue;
       }
-      this.process_vertex(G, i);
+      this.process_vertex(G, i, states, to_remove);
     }
   }
 
-  public void process_vertex(Graph G, int cur) {
+  public void process_vertex(Graph G, int cur, Stack<SearchState> states, ArrayList<Integer> to_remove) {
+    int candidates_left;
+    int clique_size;
+    int clique_potential;
+    int j;
+    int k;
+    int vert;
     Vertex vcur = G.vertices.get(cur);
     Vertex vvert;
     SearchState x = new SearchState(vcur);
     BitSet res = new BitSet(vcur.N);
     res.set(vcur.spos);
-    this.clique_potential = 1;
+    clique_potential = 1;
 
     // suppose the graph was only upto vertex cur
     // and cur has the coloring number K, we shall
@@ -54,11 +48,11 @@ public class StackDFS {
       vert = vcur.neibs.get(j);
       if (G.vertices.get(vert).mcs < vcur.mcs) {
         x.cand.set(j);
-        this.clique_potential++;
+        clique_potential++;
       }
     }
 
-    if (this.clique_potential <= G.CUR_MAX_CLIQUE_SIZE) return;
+    if (clique_potential <= G.CUR_MAX_CLIQUE_SIZE) return;
 
     // always use std::move when pushing on to stack
     states.push(x);
