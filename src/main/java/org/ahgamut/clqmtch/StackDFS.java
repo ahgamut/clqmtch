@@ -12,16 +12,16 @@ public class StackDFS {
     states.ensureCapacity(G.CLIQUE_LIMIT);
     to_remove.ensureCapacity(G.CLIQUE_LIMIT);
     this.process_vertex(G, G.CUR_MAX_CLIQUE_LOCATION, states, to_remove);
-    for (int i = G.n_vert - 1; i >= 0; i--) {
-      if (G.vertices.get(i).mcs <= G.CUR_MAX_CLIQUE_SIZE
-          || G.CUR_MAX_CLIQUE_SIZE >= G.CLIQUE_LIMIT) {
+    for (int i = G.n_vert - 1; i >= 0 && G.CUR_MAX_CLIQUE_SIZE < G.CLIQUE_LIMIT; i--) {
+      if (G.vertices.get(i).mcs <= G.CUR_MAX_CLIQUE_SIZE) {
         continue;
       }
       this.process_vertex(G, i, states, to_remove);
     }
   }
 
-  public void process_vertex(Graph G, int cur, Stack<SearchState> states, ArrayList<Integer> to_remove) {
+  private void process_vertex(
+      Graph G, int cur, Stack<SearchState> states, ArrayList<Integer> to_remove) {
     int candidates_left;
     int clique_size;
     int clique_potential;
