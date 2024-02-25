@@ -75,7 +75,6 @@ public class Graph {
         this.CLIQUE_LIMIT = mcs;
       }
     }
-    System.out.printf("clique limit %d\n", this.CLIQUE_LIMIT);
   }
 
   public ArrayList<Integer> get_max_clique() {
@@ -88,5 +87,10 @@ public class Graph {
 
   public void disp() {
     for (int i = 0; i < this.n_vert; ++i) this.vertices.get(i).disp();
+  }
+
+  public String toString() {
+    return String.format(
+        "vertices: %d\nedges: %d\nclique limit: %d\n", n_vert, n_edges, CLIQUE_LIMIT);
   }
 }

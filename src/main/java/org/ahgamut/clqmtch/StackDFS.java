@@ -1,6 +1,7 @@
 package org.ahgamut.clqmtch;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Stack;
 
 public class StackDFS {
@@ -13,8 +14,6 @@ public class StackDFS {
   int j;
   int k;
   int vert;
-  int start;
-  int ans;
 
   StackDFS() {
     this.states = new Stack<>();
@@ -25,7 +24,7 @@ public class StackDFS {
     this.states.ensureCapacity(G.CLIQUE_LIMIT);
     this.to_remove.ensureCapacity(G.CLIQUE_LIMIT);
     this.process_vertex(G, G.CUR_MAX_CLIQUE_LOCATION);
-    for (i = G.n_vert - 1; i > 0; i--) {
+    for (i = G.n_vert - 1; i >= 0; i--) {
       if (G.vertices.get(i).mcs <= G.CUR_MAX_CLIQUE_SIZE
           || G.CUR_MAX_CLIQUE_SIZE >= G.CLIQUE_LIMIT) {
         continue;
@@ -36,7 +35,10 @@ public class StackDFS {
 
   public void process_vertex(Graph G, int cur) {
     Vertex vcur = G.vertices.get(cur);
+    Vertex vvert;
     SearchState x = new SearchState(vcur);
+    BitSet res = new BitSet(vcur.N);
+    res.set(vcur.spos);
     this.clique_potential = 1;
 
     // suppose the graph was only upto vertex cur
@@ -56,21 +58,19 @@ public class StackDFS {
       }
     }
 
-    if (this.clique_potential <= G.CUR_MAX_CLIQUE_SIZE) {
-      return;
-    }
+    if (this.clique_potential <= G.CUR_MAX_CLIQUE_SIZE) return;
 
     // always use std::move when pushing on to stack
     states.push(x);
     clique_size = 1;
 
-    start = 0;
     while (!states.isEmpty()) {
       if (G.CUR_MAX_CLIQUE_SIZE >= G.CLIQUE_LIMIT) break;
       // strong assumption:
       // the top of the stack always leads to a clique larger than the current max
       // (checking is done before pushing on to the stack)
       SearchState cur_state = states.peek();
+      // System.out.printf("%d %d %s\n", cur, states.size(), cur_state.toString());
       candidates_left = cur_state.cand.cardinality();
       // clique_size == cur_state.res.cardinality()
       //
@@ -81,11 +81,11 @@ public class StackDFS {
       // in case cur_state.start_at was cleared,
       // move to the next valid position now,
       // so when we return to cur_state it is proper
-      cur_state.start_at = cur_state.cand.nextSetBit(cur_state.start_at);
+      // cur_state.start_at = cur_state.cand.nextSetBit(cur_state.start_at);
 
-      for (j = cur_state.start_at; j < vcur.N; j = cur_state.start_at) {
+      for (j = cur_state.start_at; j >= 0 && j < vcur.N; j = cur_state.start_at) {
         cur_state.cand.clear(j);
-        cur_state.start_at = cur_state.cand.nextSetBit(cur_state.start_at + 1);
+        cur_state.start_at = cur_state.cand.nextSetBit(j);
         candidates_left--;
         clique_potential = candidates_left + 1 + clique_size;
 
@@ -93,15 +93,15 @@ public class StackDFS {
         to_remove.clear();
 
         vert = vcur.neibs.get(j);
-        start = G.vertices.get(vert).spos;
+        vvert = G.vertices.get(vert);
 
         for (k = cur_state.start_at;
-            k < vcur.N && clique_potential > G.CUR_MAX_CLIQUE_SIZE;
+            k >= 0 && k < vcur.N && clique_potential > G.CUR_MAX_CLIQUE_SIZE;
             k = cur_state.cand.nextSetBit(k + 1)) {
-          if (!G.vertices.get(vert).neibs.contains(k)) to_remove.add(k);
-
-          start += ans;
-          clique_potential = (candidates_left - to_remove.size()) + clique_size + 1;
+          if (!vvert.neibs.contains(vcur.neibs.get(k))) {
+            to_remove.add(k);
+            clique_potential -= 1;
+          }
         }
 
         // is the current maximum beatable?
@@ -112,21 +112,23 @@ public class StackDFS {
           // this clique has beaten the existing maximum
           if (candidates_left == 0) {
             // include vert as part of the clique and copy
-            cur_state.res.set(j);
+            res.set(j);
             vcur.bits.clear();
-            vcur.bits.or(cur_state.res);
+            vcur.bits.or(res);
             vcur.mcs = clique_potential;
             G.CUR_MAX_CLIQUE_SIZE = clique_potential;
             G.CUR_MAX_CLIQUE_LOCATION = cur;
 
             // search can now continue without vert
-            cur_state.res.clear(j);
+            res.clear(j);
           } else // clique may still grow to beat the maximum
           {
             SearchState future_state = new SearchState(cur_state);
-
             // remove invalid members from the candidate set
             for (int ll : to_remove) future_state.cand.clear(ll);
+            res.set(j);
+            future_state.id = j;
+            future_state.start_at = future_state.cand.nextSetBit(0);
 
             // clique_potential check has happened before pushing on to the
             // stack; strong assumption is therefore valid
@@ -145,24 +147,21 @@ public class StackDFS {
       }
 
       // all verts with id > cur_state.id have been checked
-      if (j == vcur.N) {
+      if (j < 0 || j >= vcur.N) {
         // all potential cliques that can contain (cur, v) have been searched
         // where v is at position cur_state.id in list of cur's neighbors
         states.pop();
 
         // remove v from clique consideration because the future
         // candidates will not have it as part of the clique
-        cur_state.res.clear(cur_state.id);
+        res.clear(cur_state.id);
         clique_size--;
       }
     }
 
     if (!states.empty()) // the search was terminated due to CLIQUE_LIMIT
     {
-      // release memory of all candidates on the stack
       states.clear();
     }
-    // release memory of x.res i.e. the space for
-    // the clique allocated at the base of the stack
   }
 }

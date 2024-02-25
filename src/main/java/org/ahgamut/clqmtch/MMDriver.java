@@ -1,18 +1,20 @@
 package org.ahgamut.clqmtch;
 
+import java.util.ArrayList;
+
 /** Hello world! */
 public class MMDriver {
   public static void main(String[] args) {
     MMReader reader = new MMReader();
     reader.readFile(args[0]);
-    if (reader.edges.size() > 0) {
+    if (!reader.edges.isEmpty()) {
       Graph g = new Graph();
       g.load_edges(reader.num_vertices, reader.num_edges, reader.edges);
-      // g.disp();
-      // StackDFS s = new StackDFS();
-      // s.process_graph(g);
-      // g.disp();
-      // System.out.println(g.get_max_clique().toString());
+      System.out.println(g.toString());
+      StackDFS s = new StackDFS();
+      s.process_graph(g);
+      ArrayList<Integer> t = g.get_max_clique();
+      System.out.println(t.size() + " " + t.toString());
     }
   }
 }

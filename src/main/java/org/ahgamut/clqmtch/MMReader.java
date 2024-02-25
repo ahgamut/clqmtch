@@ -48,8 +48,6 @@ public class MMReader {
       edges.add(new EdgeValue(first, second));
       edges.add(new EdgeValue(second, first));
     }
-    System.out.println("vertices: " + num_vertices);
-    System.out.println("edges: " + num_edges);
     Collections.sort(edges);
   }
 
