@@ -36,7 +36,7 @@ public class Mapper3 {
     t[ii].construct(x, y, z, p[x], p[y], p[z]);
   }
 
-  Graph construct_graph(double[][] q_pts, int qlen,
+  public Graph construct_graph(double[][] q_pts, int qlen,
                         double[][] k_pts, int klen,
                         double delta, double epsilon,
                         double min_ratio,
