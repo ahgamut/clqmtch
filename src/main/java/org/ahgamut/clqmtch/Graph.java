@@ -36,7 +36,7 @@ public class Graph {
     }
 
     for (i = 0; i < this.n_vert; ++i) {
-      for (j = i + 1; j < this.n_vert; ++i) {
+      for (j = i + 1; j < this.n_vert; ++j) {
         if(adjmat[i][j] != 0 || adjmat[j][i] != 0) {
           adjmat[i][j] = 1;
           adjmat[j][i] = 1;

@@ -59,13 +59,11 @@ public class Mapper3 {
     int zz;
 
     for (zz = 0; zz < qlen; zz++) {
-      q[zz].x = q_pts[zz][0];
-      q[zz].y = q_pts[zz][1];
+      q[zz] = new Point(q_pts[zz][0], q_pts[zz][1]);
     }
 
-      for (zz = 0; zz < klen; zz++) {
-      k[zz].x = k_pts[zz][0];
-      k[zz].y = k_pts[zz][1];
+    for (zz = 0; zz < klen; zz++) {
+      k[zz] = new Point(k_pts[zz][0], k_pts[zz][1]);
     }
 
       /* declare Triple arrays and sizes */
@@ -91,12 +89,14 @@ public class Mapper3 {
 
     /* fill the first set of triples */
     for (ix = 0; ix < M; ++ix) {
+      qt[ix] = new Triple();
       invert_combi(qlen, ix, qt, q);
       valid_M += qt[ix].valid ? 1 : 0;
     }
 
     /* fill the second set of triples */
     for (iy = 0; iy < N; ++iy) {
+      kt[iy] = new Triple();
       invert_combi(klen, iy, kt, k);
       valid_N += kt[iy].valid ? 1 : 0;
     }
@@ -372,6 +372,11 @@ public class Mapper3 {
       int n = qlen * klen;
       this.matsize = n;
       this.mat = new char[n][n];
+      for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+          mat[i][j] = 0;
+        }
+      }
     }
 
     void add_edge(int i1, int i2, int j1, int j2) {
