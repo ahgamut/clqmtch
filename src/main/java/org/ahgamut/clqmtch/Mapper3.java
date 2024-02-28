@@ -2,8 +2,8 @@ package org.ahgamut.clqmtch;
 
 public class Mapper3 {
   static final double MIN_DIST = 1e-3;
-  static final double MIN_ANGLE = 5e-3;
-  static final double PI = Math.PI;
+  // static final double MIN_ANGLE = 5e-3;
+  // static final double PI = Math.PI;
   private static double MIN_RATIO;
   private static double MAX_RATIO;
   final double MIN_RATIO_DEFAULT = 0.5;
@@ -11,9 +11,9 @@ public class Mapper3 {
   final int NUM_POINTS = 384; /* technically 1024 */
 
   void invert_combi(int n, int i, Triple[] t, Point[] p) {
-    int x = 0;
-    int y = 0;
-    int z = 0;
+    int x;
+    int y;
+    int z;
     int ii = i;
     /* (x, y, z) is the ith element in the lexicographic ordering
      * of the elements in choose(n, 3). solve for x, y, z.

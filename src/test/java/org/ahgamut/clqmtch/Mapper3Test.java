@@ -1,7 +1,6 @@
 package org.ahgamut.clqmtch;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Mapper3Test {
   public static void main(String[] args) {
@@ -24,11 +23,11 @@ public class Mapper3Test {
     ArrayList<Integer> c = g.get_max_clique();
     int qi;
     int ki;
-    for (int i = 0; i < c.size(); ++i) {
-        qi = c.get(i) / 3;
-        ki = c.get(i) % 3;
+    for (int ci : c) {
+        qi = ci / 3;
+        ki = ci % 3;
         System.out.printf("(%f, %f) -> (%f, %f)\n", q_pts[qi][0], q_pts[qi][1], k_pts[ki][0], k_pts[ki][1]);
     }
-    System.out.println(c.toString());
+    System.out.println(c);
   }
 }
