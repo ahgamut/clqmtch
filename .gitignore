@@ -104,7 +104,7 @@ papers/
 
 # only the sample matrix files
 *.mtx
-!tests/*.mtx
+!src/test/*.mtx
 
 # ignore data needed for applications
 examples/*.ppm

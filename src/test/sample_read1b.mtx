@@ -1,0 +1,18 @@
+% sample created for cliquematch package
+% similar to Matrix Market format for undirected unweighted graphs
+%
+% -------------------------------------
+% Python sample
+% 
+% import cliquematch
+% G = cliquematch.Graph.from_file("sample_read1.mtx")
+% print(repr(G))
+%--------------------------------------
+%
+%
+5 5 5
+2 3
+2 5
+2 1
+3 5
+4 1
