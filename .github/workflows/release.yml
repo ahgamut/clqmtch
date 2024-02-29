@@ -9,7 +9,6 @@ on:
 
 jobs:
   build_jar:
-    needs: release_part
     name: build clqmtch JAR
     runs-on: ubuntu-latest
     strategy:
