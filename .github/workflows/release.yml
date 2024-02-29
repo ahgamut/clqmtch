@@ -1,11 +1,9 @@
 name: clqmtch JAR release
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - java
+    branches: java
     tags:
-      - "java-v*"
+      - "java-v.*"
 
 jobs:
   build_jar:
@@ -28,7 +26,8 @@ jobs:
       - name: create release
         id: create_release
         uses: actions/create-release@v1
-        prerelease: true
+        with:
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: upload release assets
@@ -37,6 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
-        asset_path: target/clqmtch-0.1.0-SNAPSHOT.jar
-        asset_name: clqmtch-0.1.0.jar
-        asset_content_type: application/java-archive
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/clqmtch-0.1.0-SNAPSHOT.jar
+          asset_name: clqmtch-0.1.0.jar
+          asset_content_type: application/java-archive
