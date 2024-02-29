@@ -1,9 +1,12 @@
 name: clqmtch JAR release
 on:
+  workflow_dispatch:
+  release:
+    types: [created]
+  create:
   push:
-    branches: java
     tags:
-      - "java-v.*"
+      - java-v.*
 
 jobs:
   release_part:
