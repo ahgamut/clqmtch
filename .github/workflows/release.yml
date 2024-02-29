@@ -8,21 +8,6 @@ on:
       - java-v.*
 
 jobs:
-  release_part:
-    name: declare release
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - name: create release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          prerelease: true
-          tag_name: ${{ github.ref_name }}
-          release_name: "clqmtch ${{ github.ref_name }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build_jar:
     needs: release_part
     name: build clqmtch JAR
@@ -45,12 +30,12 @@ jobs:
         run: bash ./.github/scripts/build-jar.sh
       - name: upload release assets
         id: upload_assets
-        uses: actions/upload-release-asset@v1
+        uses: svenstaro/upload-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
         with:
-          upload_url: ${{ needs.release_part.outputs.upload_url }}
-          asset_path: target/clqmtch-1.0-SNAPSHOT.jar
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/clqmtch-1.0-SNAPSHOT.jar
+          overwrite: true
           asset_name: clqmtch-1.0-${{ matrix.target_arch }}.jar
-          asset_content_type: application/java-archive
