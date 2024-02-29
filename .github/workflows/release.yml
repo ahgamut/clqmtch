@@ -39,6 +39,6 @@ jobs:
           VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/clqmtch-0.1.0-SNAPSHOT.jar
-          asset_name: clqmtch-0.1.0.jar
+          asset_path: target/clqmtch-1.0-SNAPSHOT.jar
+          asset_name: clqmtch-1.0.jar
           asset_content_type: application/java-archive

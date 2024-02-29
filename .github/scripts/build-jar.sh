@@ -8,3 +8,5 @@ mvn clean
 
 echo "building JAR..."
 mvn package
+
+ls -alh target/
