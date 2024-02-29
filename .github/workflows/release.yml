@@ -9,6 +9,8 @@ jobs:
   release_part:
     name: declare release
     runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: create release
         id: create_release
@@ -45,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
         with:
-          upload_url: ${{ jobs.release_part.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ jobs.release_part.outputs.upload_url }}
           asset_path: target/clqmtch-1.0-SNAPSHOT.jar
           asset_name: clqmtch-1.0-${{ matrix.target_arch }}.jar
           asset_content_type: application/java-archive
