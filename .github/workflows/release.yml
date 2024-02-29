@@ -17,8 +17,8 @@ jobs:
         uses: actions/create-release@v1
         with:
           prerelease: true
-          tag_name: ${{ github.ref }}
-          release_name: "clqmtch ${{ github.ref }}"
+          tag_name: ${{ github.ref_name }}
+          release_name: "clqmtch ${{ github.ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build_jar:
