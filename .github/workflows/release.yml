@@ -28,7 +28,7 @@ jobs:
         uses: actions/create-release@v1
         with:
           prerelease: true
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: upload release assets
