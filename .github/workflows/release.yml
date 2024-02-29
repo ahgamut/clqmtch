@@ -1,0 +1,42 @@
+name: clqmtch JAR release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - java
+    tags:
+      - "java-v*"
+
+jobs:
+  build_jar:
+    name: build clqmtch JAR
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        id: checkout_repo
+        uses: actions/checkout@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: setup JDK
+        uses: actions/setup-java@v2
+        id: jdk_setup
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+      - name: build JAR
+        run: bash ./.github/scripts/build-jar.sh
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1
+        prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: upload release assets
+        id: upload_assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
+        asset_path: target/clqmtch-0.1.0-SNAPSHOT.jar
+        asset_name: clqmtch-0.1.0.jar
+        asset_content_type: application/java-archive
