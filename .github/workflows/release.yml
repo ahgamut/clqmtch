@@ -6,13 +6,24 @@ on:
       - "java-v.*"
 
 jobs:
+  release_part:
+    steps:
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          prerelease: true
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build_jar:
+    needs: release_part
     name: build clqmtch JAR
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        target_arch: [ x64, aarch64 ]
+        target_arch: [x64, aarch64]
     steps:
       - name: checkout repo
         id: checkout_repo
@@ -25,14 +36,6 @@ jobs:
           java-version: '8'
       - name: build JAR
         run: bash ./.github/scripts/build-jar.sh
-      - name: create release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          prerelease: true
-          tag_name: ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: upload release assets
         id: upload_assets
         uses: actions/upload-release-asset@v1
@@ -40,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ jobs.release_part.steps.create_release.outputs.upload_url }}
           asset_path: target/clqmtch-1.0-SNAPSHOT.jar
           asset_name: clqmtch-1.0-${{ matrix.target_arch }}.jar
           asset_content_type: application/java-archive
