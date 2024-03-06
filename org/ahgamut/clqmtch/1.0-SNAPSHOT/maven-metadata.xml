@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata modelVersion="1.1.0">
-  <groupId>org.ahgamut.clqmtch</groupId>
+  <groupId>org.ahgamut</groupId>
   <artifactId>clqmtch</artifactId>
   <versioning>
-    <lastUpdated>20240306192625</lastUpdated>
+    <lastUpdated>20240306193100</lastUpdated>
     <snapshot>
-      <timestamp>20240306.192625</timestamp>
+      <timestamp>20240306.193100</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>1.0-20240306.192625-1</value>
-        <updated>20240306192625</updated>
+        <value>1.0-20240306.193100-1</value>
+        <updated>20240306193100</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>1.0-20240306.192625-1</value>
-        <updated>20240306192625</updated>
+        <value>1.0-20240306.193100-1</value>
+        <updated>20240306193100</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
