@@ -12,7 +12,7 @@ public class Graph {
   int CLIQUE_LIMIT;
   ArrayList<Vertex> vertices;
 
-  Graph() {
+  public Graph() {
     this.n_vert = 0;
     this.n_edges = 0;
     this.max_degree = 0;
@@ -86,7 +86,7 @@ public class Graph {
     this.set_bounds();
   }
 
-  public void set_bounds() {
+  void set_bounds() {
     int cur;
     int j;
     int vert;

@@ -13,7 +13,7 @@ public class EnumerateDFS {
   ArrayList<Integer> to_remove;
   BitSet res;
 
-  EnumerateDFS(int r) {
+  public EnumerateDFS(int r) {
     this.REQUIRED_SIZE = r;
     this.cur = 0;
     this.states = new Stack<>();
