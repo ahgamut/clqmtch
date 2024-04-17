@@ -3,21 +3,21 @@
   <groupId>org.ahgamut</groupId>
   <artifactId>clqmtch</artifactId>
   <versioning>
-    <lastUpdated>20240306194502</lastUpdated>
+    <lastUpdated>20240417190926</lastUpdated>
     <snapshot>
-      <timestamp>20240306.194502</timestamp>
+      <timestamp>20240417.190926</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>1.0-20240306.194502-1</value>
-        <updated>20240306194502</updated>
+        <value>1.0-20240417.190926-1</value>
+        <updated>20240417190926</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>1.0-20240306.194502-1</value>
-        <updated>20240306194502</updated>
+        <value>1.0-20240417.190926-1</value>
+        <updated>20240417190926</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
