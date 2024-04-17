@@ -7,8 +7,13 @@ import java.util.Stack;
 public class StackDFS {
 
   public void process_graph(Graph G) {
+    this.process_graph(G, 1, 4096);
+  }
+  public void process_graph(Graph G, int lower_bound, int upper_bound) {
     Stack<SearchState> states = new Stack<>();
     ArrayList<Integer> to_remove = new ArrayList<>();
+    G.CLIQUE_LIMIT = Math.min(G.CLIQUE_LIMIT, upper_bound);
+    G.CUR_MAX_CLIQUE_SIZE = Math.max(G.CUR_MAX_CLIQUE_SIZE, lower_bound);
     states.ensureCapacity(G.CLIQUE_LIMIT);
     to_remove.ensureCapacity(G.CLIQUE_LIMIT);
     this.process_vertex(G, G.CUR_MAX_CLIQUE_LOCATION, states, to_remove);
