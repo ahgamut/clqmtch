@@ -10,7 +10,7 @@ public class MMReaderTest {
             Graph g = new Graph();
             g.load_edges(reader.num_vertices, reader.num_edges, reader.edges);
             System.out.println(g.toString());
-            StackDFS s = new StackDFS();
+            ParallelStackDFS s = new ParallelStackDFS();
             s.process_graph(g);
             // HeuristicSearch s = new HeuristicSearch();
             // enumerate
