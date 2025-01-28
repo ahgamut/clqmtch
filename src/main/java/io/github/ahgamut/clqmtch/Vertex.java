@@ -1,9 +1,9 @@
-package org.ahgamut.clqmtch;
+package io.github.ahgamut.clqmtch;
 
 import java.util.ArrayList;
 import java.util.BitSet;
 
-public class Vertex {
+class Vertex {
   int N;
   int spos;
   int mcs;

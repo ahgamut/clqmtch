@@ -1,8 +1,8 @@
-package org.ahgamut.clqmtch;
+package io.github.ahgamut.clqmtch;
 
 import java.util.BitSet;
 
-public class SearchState {
+class SearchState {
   int id;
   int start_at;
   BitSet cand;

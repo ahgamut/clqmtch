@@ -1,10 +1,10 @@
-package org.ahgamut.clqmtch;
+package io.github.ahgamut.clqmtch;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MMReader {
+class MMReader {
   int num_vertices;
   int num_edges;
   ArrayList<EdgeValue> edges;

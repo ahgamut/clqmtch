@@ -1,4 +1,4 @@
-package org.ahgamut.clqmtch;
+package io.github.ahgamut.clqmtch;
 
 import java.util.ArrayList;
 

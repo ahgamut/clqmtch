@@ -1,6 +1,6 @@
-package org.ahgamut.clqmtch;
+package io.github.ahgamut.clqmtch;
 
-public class EdgeValue implements Comparable<EdgeValue> {
+class EdgeValue implements Comparable<EdgeValue> {
   int first;
   int second;
 
